@@ -20,21 +20,21 @@ module.exports = function (grunt) {
     dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
   };
 
-    configuration.browserSync = {
-        bsFiles: {
-            src : 'example/js/*.js'
-        },
-        options: {
-            server: {
-                baseDir: "./example"
-            }
-        }
-    }
+  configuration.browserSync = {
+      bsFiles: {
+          src : 'example/js/*.js'
+      },
+      options: {
+          server: {
+              baseDir: "./example"
+          }
+      }
+  };
 
   configuration.copy.threejs = {
     src: "node_modules/three/three.min.js",
     dest: globalConfig.exampleDir + "/three.min.js"
-  }
+  };
 
   configuration.typescript = {
     options: {
@@ -44,6 +44,7 @@ module.exports = function (grunt) {
       removeComments: false
     }
   };
+
   configuration.typescript[globalConfig.moduleName] = {
     src: globalConfig.sources,
     dest: globalConfig.outDir + "/" + globalConfig.moduleName + ".js"
@@ -56,7 +57,8 @@ module.exports = function (grunt) {
       mode: "file",
       readme: "none"
     }
-  }
+  };
+
   configuration.typedoc[globalConfig.moduleName] = {
     options: {
       out: globalConfig.docDir + "/" + globalConfig.moduleName,
@@ -71,10 +73,11 @@ module.exports = function (grunt) {
       beautify: false,
       sourceMap: true
     }
-  }
+  };
   configuration.uglify[globalConfig.moduleName] = {
     files: {}
-  }
+  };
+
   configuration.uglify[globalConfig.moduleName].files["dist/" + globalConfig.moduleName + ".min.js"] = globalConfig.outDir + "/" + globalConfig.moduleName +".js";
 
   grunt.initConfig(configuration);
