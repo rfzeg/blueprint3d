@@ -29,7 +29,6 @@ module.exports = function (grunt) {
             files: ['src/**/*.ts'],
             tasks: ['compile', 'example'],
             options: {
-                //interrupt: true,
                 spawn: false,
             }
         }
