@@ -20,6 +20,17 @@ module.exports = function (grunt) {
     dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
   };
 
+    configuration.browserSync = {
+        bsFiles: {
+            src : 'example/js/*.js'
+        },
+        options: {
+            server: {
+                baseDir: "./example"
+            }
+        }
+    }
+
   configuration.copy.threejs = {
     src: "node_modules/three/three.min.js",
     dest: globalConfig.exampleDir + "/three.min.js"
@@ -85,6 +96,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask("default", [
+    "browserSync",
     "debug",
     "example"
   ]);
