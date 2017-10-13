@@ -11,7 +11,11 @@ module.exports = function (grunt) {
   };
 
   var configuration = {
-    clean: [globalConfig.outDir, globalConfig.docDir]
+    clean: [
+        globalConfig.outDir,
+        globalConfig.docDir,
+        globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js",
+        globalConfig.exampleDir + "/three.min.js"]
   };
 
   configuration.copy = {};
@@ -20,13 +24,27 @@ module.exports = function (grunt) {
     dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
   };
 
+    configuration.watch = {
+        scripts: {
+            files: ['src/**/*.ts'],
+            tasks: ['compile', 'example'],
+            options: {
+                //interrupt: true,
+                spawn: false,
+            }
+        }
+    };
+
   configuration.browserSync = {
-      bsFiles: {
-          src : 'example/js/*.js'
-      },
-      options: {
-          server: {
-              baseDir: "./example"
+      dev: {
+          bsFiles: {
+              src: 'example/js/*.js'
+          },
+          options: {
+              server: {
+                  watchTask: true,
+                  baseDir: "./example"
+              }
           }
       }
   };
@@ -48,6 +66,10 @@ module.exports = function (grunt) {
   configuration.typescript[globalConfig.moduleName] = {
     src: globalConfig.sources,
     dest: globalConfig.outDir + "/" + globalConfig.moduleName + ".js"
+  };
+
+  configuration.concurrent = {
+      target1: ["browserSync", "watch"]
   };
 
   configuration.typedoc = {
@@ -82,7 +104,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig(configuration);
 
-  grunt.registerTask("debug", [
+  grunt.registerTask("compile", [
     "typescript:" + globalConfig.moduleName
   ]);
 
@@ -93,14 +115,20 @@ module.exports = function (grunt) {
 
   grunt.registerTask("release", [
     "clean",
-    "debug",
+    "compile",
     "uglify:" + globalConfig.moduleName,
     "typedoc:" + globalConfig.moduleName
   ]);
 
   grunt.registerTask("default", [
-    "browserSync",
-    "debug",
-    "example"
+    "clean",
+    "compile",
+    "example",
+    "concurrent:target1"
   ]);
+
+    grunt.event.on('watch', function(action, filepath, target) {
+        //grunt.config(configuration.typescript[globalConfig.moduleName].src, filepath);
+        grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
+    });
 };
