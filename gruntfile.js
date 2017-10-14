@@ -25,8 +25,8 @@ module.exports = function (grunt) {
 
     configuration.copy = {
         source: {
-            src: globalConfig.srcDir + "/" + "**/*.ts",
-            dest: globalConfig.exampleDir
+            src: globalConfig.srcDir + "/**" ,
+            dest: globalConfig.exampleDir + "/"
         },
 
         compiled: {
@@ -47,29 +47,7 @@ module.exports = function (grunt) {
     };
 
 
-    configuration.watch = {
-        scripts: {
-            files: ['src/**/*.ts'],
-            tasks: ["ts:debug", "copy:source"],
-            options: {
-                spawn: false,
-            }
-        }
-    };
 
-    configuration.browserSync = {
-        dev: {
-            bsFiles: {
-                src: globalConfig.exampleDir
-            },
-            options: {
-                server: {
-                    watchTask: true,
-                    baseDir: "./example"
-                }
-            }
-        }
-    };
 
 
     configuration.ts = {
@@ -96,9 +74,37 @@ module.exports = function (grunt) {
         }
     };
 
+    //Watch, Browser Sync and Concurrent
+
+    configuration.watch = {
+        scripts: {
+            files: ['src/**/*.ts'],
+            tasks: ["copy:source", "ts:debug"],
+            options: {
+                spawn: false,
+            }
+        }
+    };
+
+    configuration.browserSync = {
+        dev: {
+            bsFiles: {
+                src: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
+            },
+            options: {
+                server: {
+                    watchTask: true,
+                    baseDir: "./example"
+                }
+            }
+        }
+    };
+
     configuration.concurrent = {
         target1: ["browserSync", "watch"]
     };
+
+    //TypeDoc and Uglify
 
     configuration.typedoc = {
         options: {
@@ -134,8 +140,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("example", [
         "copy:three",
-        "copy:jquery",
-        "copy:source",
+        "copy:jquery"
     ]);
 
     grunt.registerTask("release", [
@@ -158,7 +163,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.event.on('watch', function (action, filepath, target) {
-        //grunt.config(configuration.typescript[globalConfig.moduleName].src, filepath);
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 };
