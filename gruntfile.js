@@ -27,7 +27,7 @@ module.exports = function (grunt) {
     configuration.watch = {
         scripts: {
             files: ['src/**/*.ts'],
-            tasks: ['compile', 'example'],
+            tasks: ["ts:debug"],
             options: {
                 spawn: false,
             }
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
   configuration.browserSync = {
       dev: {
           bsFiles: {
-              src: 'example/js/*.js'
+              src: globalConfig.exampleDir
           },
           options: {
               server: {
@@ -59,13 +59,21 @@ module.exports = function (grunt) {
       declaration: false,
       sourceMap: true,
       removeComments: false
-    }
+    },
+      debug: {
+          src: globalConfig.sources,
+          dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
+      },
+      release: {
+          src: globalConfig.sources,
+          dest: globalConfig.outDir + "/" + globalConfig.moduleName + ".js"
+      }
   };
 
-  configuration.ts[globalConfig.moduleName] = {
-    src: globalConfig.sources,
-    dest: globalConfig.outDir + "/" + globalConfig.moduleName + ".js"
-  };
+    configuration.ts.debugExample = {
+        src: globalConfig.sources,
+        dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
+    };
 
   configuration.concurrent = {
       target1: ["browserSync", "watch"]
@@ -103,10 +111,6 @@ module.exports = function (grunt) {
 
   grunt.initConfig(configuration);
 
-  grunt.registerTask("compile", [
-    "ts:" + globalConfig.moduleName
-  ]);
-
   grunt.registerTask("example", [
     "copy:threejs",
     "copy:" + globalConfig.moduleName
@@ -114,14 +118,14 @@ module.exports = function (grunt) {
 
   grunt.registerTask("release", [
     "clean",
-    "compile",
+    "ts:release",
     "uglify:" + globalConfig.moduleName,
     "typedoc:" + globalConfig.moduleName
   ]);
 
   grunt.registerTask("default", [
     "clean",
-    "compile",
+    "ts:debug",
     "example",
     "concurrent:target1"
   ]);
