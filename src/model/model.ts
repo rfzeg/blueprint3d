@@ -1,5 +1,5 @@
-/// <reference path="../../lib/three.d.ts" />
-/// <reference path="../../lib/jQuery.d.ts" />
+/// <reference path="../../node_modules/@types/three/index.d.ts" />
+/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 /// <reference path="floorplan.ts" />
 /// <reference path="scene.ts" />
 

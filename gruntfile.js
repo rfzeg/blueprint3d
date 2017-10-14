@@ -56,7 +56,7 @@ module.exports = function (grunt) {
   configuration.ts = {
     options: {
       target: "es5",
-      declaration: true,
+      declaration: false,
       sourceMap: true,
       removeComments: false
     }

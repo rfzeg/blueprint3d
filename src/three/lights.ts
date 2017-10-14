@@ -1,4 +1,4 @@
-/// <reference path="../../lib/three.d.ts" />
+/// <reference path="../../node_modules/@types/three/index.d.ts" />
 
 module BP3D.Three {
   export var Lights = function (scene, floorplan) {

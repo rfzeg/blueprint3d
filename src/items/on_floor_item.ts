@@ -1,4 +1,4 @@
-/// <reference path="../../lib/three.d.ts" />
+/// <reference path="../../node_modules/@types/three/index.d.ts" />
 /// <reference path="../model/model.ts" />
 /// <reference path="floor_item.ts" />
 /// <reference path="metadata.ts" />
