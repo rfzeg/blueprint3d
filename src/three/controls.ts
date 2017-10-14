@@ -8,9 +8,6 @@ Contributors:
  * @author erich666 / http://erichaines.com
  */
 
-/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
-/// <reference path="../../node_modules/@types/three/index.d.ts" />
-
 module BP3D.Three {
   export var Controls = function (object, domElement) {
 

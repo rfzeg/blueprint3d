@@ -1,5 +1,3 @@
-/// <reference path="../../node_modules/@types/three/index.d.ts" />
-/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 /// <reference path="../core/utils.ts" />
 /// <reference path="../items/factory.ts" />
 

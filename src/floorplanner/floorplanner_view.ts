@@ -1,4 +1,3 @@
-/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 /// <reference path="../core/configuration.ts" />
 /// <reference path="../core/dimensioning.ts" />
 /// <reference path="../core/utils.ts" />

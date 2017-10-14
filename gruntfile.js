@@ -1,136 +1,163 @@
 module.exports = function (grunt) {
 
-  require("matchdep").filterAll("grunt-*").forEach(grunt.loadNpmTasks);
+    require("matchdep").filterAll("grunt-*").forEach(grunt.loadNpmTasks);
 
-  var globalConfig = {
-    moduleName: "blueprint3d",
-    sources: ["src/*.ts", "src/*/*.ts"],
-    outDir: "dist",
-    docDir: "doc",
-    exampleDir: "example/js/"
-  };
+    var globalConfig = {
+        moduleName: "blueprint3d",
+        sources: ["src/*.ts", "src/*/*.ts"],
+        exampleSources: ["example/js/src/*.ts", "example/js/src/*/*.ts"],
+        srcDir: "src",
+        outDir: "dist",
+        docDir: "doc",
+        exampleDir: "example/js/"
+    };
 
-  var configuration = {
-    clean: [
-        globalConfig.outDir,
-        globalConfig.docDir,
-        globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js",
-        globalConfig.exampleDir + "/three.min.js"]
-  };
+    var configuration = {
+        clean: [
+            globalConfig.outDir,
+            globalConfig.docDir,
+            globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js",
+            globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js.map",
+            globalConfig.exampleDir + "/three.min.js",
+            globalConfig.exampleDir + "/jquery.js",
+        ]
+    };
 
-  configuration.copy = {};
-  configuration.copy[globalConfig.moduleName] = {
-    src: globalConfig.outDir + "/" + globalConfig.moduleName + ".js",
-    dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
-  };
+    configuration.copy = {
+        source: {
+            src: globalConfig.srcDir + "/" + "**/*.ts",
+            dest: globalConfig.exampleDir
+        },
+
+        compiled: {
+            src: globalConfig.outDir + "/" + globalConfig.moduleName + ".js",
+            dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
+        },
+
+        three: {
+            src: "node_modules/three/three.js",
+            dest: globalConfig.exampleDir + "/three.min.js"
+        },
+
+        jquery: {
+            src: "node_modules/jquery/dist/jquery.js",
+            dest: globalConfig.exampleDir + "/jquery.js"
+        }
+
+    };
+
 
     configuration.watch = {
         scripts: {
             files: ['src/**/*.ts'],
-            tasks: ["ts:debug"],
+            tasks: ["ts:debug", "copy:source"],
             options: {
                 spawn: false,
             }
         }
     };
 
-  configuration.browserSync = {
-      dev: {
-          bsFiles: {
-              src: globalConfig.exampleDir
-          },
-          options: {
-              server: {
-                  watchTask: true,
-                  baseDir: "./example"
-              }
-          }
-      }
-  };
-
-  configuration.copy.threejs = {
-    src: "node_modules/three/three.min.js",
-    dest: globalConfig.exampleDir + "/three.min.js"
-  };
-
-  configuration.ts = {
-    options: {
-      target: "es5",
-      declaration: false,
-      sourceMap: true,
-      removeComments: false
-    },
-      debug: {
-          src: globalConfig.sources,
-          dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
-      },
-      release: {
-          src: globalConfig.sources,
-          dest: globalConfig.outDir + "/" + globalConfig.moduleName + ".js"
-      }
-  };
-
-    configuration.ts.debugExample = {
-        src: globalConfig.sources,
-        dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
+    configuration.browserSync = {
+        dev: {
+            bsFiles: {
+                src: globalConfig.exampleDir
+            },
+            options: {
+                server: {
+                    watchTask: true,
+                    baseDir: "./example"
+                }
+            }
+        }
     };
 
-  configuration.concurrent = {
-      target1: ["browserSync", "watch"]
-  };
 
-  configuration.typedoc = {
-    options: {
-      name: globalConfig.moduleName,
-      target: "es5",
-      mode: "file",
-      readme: "none"
-    }
-  };
+    configuration.ts = {
+        options: {
+            target: "es6",
+            declaration: false,
+            sourceMap: true,
+            removeComments: false,
+            options: {
+                types: [
+                    "jquery",
+                    "three"
+                ]
+            }
+        },
+        debug: {
+            src: globalConfig.exampleSources,
+            dest: globalConfig.exampleDir + "/" + globalConfig.moduleName + ".js"
+        },
+        release: {
+            src: globalConfig.sources,
+            dest: globalConfig.outDir + "/" + globalConfig.moduleName + ".js"
 
-  configuration.typedoc[globalConfig.moduleName] = {
-    options: {
-      out: globalConfig.docDir + "/" + globalConfig.moduleName,
-      name: globalConfig.moduleName
-    },
-    src: globalConfig.sources
-  };
+        }
+    };
 
-  configuration.uglify = {
-    options: {
-      mangle: true,
-      beautify: false,
-      sourceMap: true
-    }
-  };
-  configuration.uglify[globalConfig.moduleName] = {
-    files: {}
-  };
+    configuration.concurrent = {
+        target1: ["browserSync", "watch"]
+    };
 
-  configuration.uglify[globalConfig.moduleName].files["dist/" + globalConfig.moduleName + ".min.js"] = globalConfig.outDir + "/" + globalConfig.moduleName +".js";
+    configuration.typedoc = {
+        options: {
+            name: globalConfig.moduleName,
+            target: "es5",
+            mode: "file",
+            readme: "none"
+        }
+    };
 
-  grunt.initConfig(configuration);
+    configuration.typedoc[globalConfig.moduleName] = {
+        options: {
+            out: globalConfig.docDir + "/" + globalConfig.moduleName,
+            name: globalConfig.moduleName
+        },
+        src: globalConfig.sources
+    };
 
-  grunt.registerTask("example", [
-    "copy:threejs",
-    "copy:" + globalConfig.moduleName
-  ]);
+    configuration.uglify = {
+        options: {
+            mangle: true,
+            beautify: false,
+            sourceMap: true
+        }
+    };
+    configuration.uglify[globalConfig.moduleName] = {
+        files: {}
+    };
 
-  grunt.registerTask("release", [
-    "clean",
-    "ts:release",
-    "uglify:" + globalConfig.moduleName,
-    "typedoc:" + globalConfig.moduleName
-  ]);
+    configuration.uglify[globalConfig.moduleName].files["dist/" + globalConfig.moduleName + ".min.js"] = globalConfig.outDir + "/" + globalConfig.moduleName + ".js";
 
-  grunt.registerTask("default", [
-    "clean",
-    "ts:debug",
-    "example",
-    "concurrent:target1"
-  ]);
+    grunt.initConfig(configuration);
 
-    grunt.event.on('watch', function(action, filepath, target) {
+    grunt.registerTask("example", [
+        "copy:three",
+        "copy:jquery",
+        "copy:source",
+    ]);
+
+    grunt.registerTask("release", [
+        "clean",
+        "ts:release",
+        "uglify:" + globalConfig.moduleName,
+        "typedoc:" + globalConfig.moduleName
+    ]);
+
+    grunt.registerTask("debug", [
+        "clean",
+        "copy:source",
+        "ts:debug",
+        "example",
+        "concurrent:target1"
+    ]);
+
+    grunt.registerTask("default", [
+        "debug"
+    ]);
+
+    grunt.event.on('watch', function (action, filepath, target) {
         //grunt.config(configuration.typescript[globalConfig.moduleName].src, filepath);
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });

@@ -1,4 +1,3 @@
-/// <reference path="../../node_modules/@types/jquery/index.d.ts" />
 /// <reference path="../core/utils.ts" />
 /// <reference path="floorplan.ts" />
 /// <reference path="wall.ts" />
