@@ -100,7 +100,8 @@ module BP3D.Three {
         new THREE.PlaneGeometry(size, size),
         new THREE.MeshBasicMaterial());
       plane.rotation.x = -Math.PI / 2;
-      plane.visible = false;
+      plane.visible = true;
+      plane.material.visible = false;
       scene.add(plane);
     }
 
@@ -300,6 +301,7 @@ module BP3D.Three {
           hudObject,
           false, false, true);
         if (hudIntersects.length > 0) {
+          console.log("hud intersection detected");
           rotateMouseOver = true;
           hud.setMouseover(true);
           intersectedObject = null;
@@ -361,6 +363,11 @@ module BP3D.Three {
     this.getIntersections = function (vec2, objects, filterByNormals, onlyVisible, recursive, linePrecision) {
 
       var vector = mouseToVec3(vec2);
+      console.log("vector 2: " + vec2.toArray());
+      if (objects != null && objects.position != null) {
+          console.log("object 3: " + objects.position.toArray());
+      }
+
 
       onlyVisible = onlyVisible || false;
       filterByNormals = filterByNormals || false;
@@ -378,6 +385,9 @@ module BP3D.Three {
         intersections = raycaster.intersectObjects(objects, recursive);
       } else {
         intersections = raycaster.intersectObject(objects, recursive);
+        if (intersections.length > 0) {
+          console.log("intersections:" + intersections[0].point.toArray());
+        }
       }
       // filter by visible, if true
       if (onlyVisible) {
