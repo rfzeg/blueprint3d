@@ -35,7 +35,7 @@ module.exports = function (grunt) {
         },
 
         three: {
-            src: "node_modules/three/three.js",
+            src: "node_modules/three/build/three.js",
             dest: globalConfig.exampleDir + "/three.min.js"
         },
 
@@ -45,10 +45,6 @@ module.exports = function (grunt) {
         }
 
     };
-
-
-
-
 
     configuration.ts = {
         options: {
