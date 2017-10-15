@@ -113,7 +113,8 @@ module BP3D.Model {
 
       this.plane = new THREE.Mesh(geometry,
         new THREE.MeshBasicMaterial());
-      this.plane.visible = false;
+      this.plane.visible = true;
+      this.plane.material.visible = false;
       this.plane.edge = this; // js monkey patch
 
       this.computeTransforms(
