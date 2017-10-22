@@ -363,11 +363,6 @@ module BP3D.Three {
     this.getIntersections = function (vec2, objects, filterByNormals, onlyVisible, recursive, linePrecision) {
 
       var vector = mouseToVec3(vec2);
-      console.log("vector 2: " + vec2.toArray());
-      if (objects != null && objects.position != null) {
-          console.log("object 3: " + objects.position.toArray());
-      }
-
 
       onlyVisible = onlyVisible || false;
       filterByNormals = filterByNormals || false;
