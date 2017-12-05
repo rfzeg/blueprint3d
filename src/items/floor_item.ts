@@ -7,7 +7,7 @@ module BP3D.Items {
    * A Floor Item is an entity to be placed related to a floor.
    */
   export abstract class FloorItem extends Item {
-    constructor(model: Model.Model, metadata: Metadata, geometry: THREE.Geometry, material: THREE.MeshFaceMaterial, position: THREE.Vector3, rotation: number, scale: THREE.Vector3) {
+    constructor(model: Model.Model, metadata: Metadata, geometry: THREE.Geometry, material: THREE.MultiMaterial, position: THREE.Vector3, rotation: number, scale: THREE.Vector3) {
       super(model, metadata, geometry, material, position, rotation, scale);
     };
 

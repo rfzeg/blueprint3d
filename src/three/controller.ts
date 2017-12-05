@@ -301,7 +301,6 @@ module BP3D.Three {
           hudObject,
           false, false, true);
         if (hudIntersects.length > 0) {
-          console.log("hud intersection detected");
           rotateMouseOver = true;
           hud.setMouseover(true);
           intersectedObject = null;
@@ -380,9 +379,6 @@ module BP3D.Three {
         intersections = raycaster.intersectObjects(objects, recursive);
       } else {
         intersections = raycaster.intersectObject(objects, recursive);
-        if (intersections.length > 0) {
-          console.log("intersections:" + intersections[0].point.toArray());
-        }
       }
       // filter by visible, if true
       if (onlyVisible) {

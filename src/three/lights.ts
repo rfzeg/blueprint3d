@@ -25,12 +25,11 @@ module BP3D.Three {
 
       dirLight.castShadow = true;
 
-      dirLight.shadowMapWidth = 1024;
-      dirLight.shadowMapHeight = 1024;
+      dirLight.shadow.mapSize.width = 1024;
+      dirLight.shadow.mapSize.height = 1024;
 
-      dirLight.shadowCameraFar = height + tol;
-      dirLight.shadowBias = -0.0001;
-      dirLight.shadowDarkness = 0.2;
+      dirLight.shadow.camera.far = height + tol;
+      dirLight.shadow.bias = -0.0001;
       dirLight.visible = true;
       dirLight.shadowCameraVisible = false;
 
@@ -52,16 +51,16 @@ module BP3D.Three {
       dirLight.target.position.copy(center);
       //dirLight.updateMatrix();
       //dirLight.updateWorldMatrix()
-      dirLight.shadowCameraLeft = -d;
-      dirLight.shadowCameraRight = d;
-      dirLight.shadowCameraTop = d;
-      dirLight.shadowCameraBottom = -d;
+      dirLight.shadow.camera.left = -d;
+      dirLight.shadow.camera.right = d;
+      dirLight.shadow.camera.top = d;
+      dirLight.shadow.camera.bottom = -d;
       // this is necessary for updates
       if (dirLight.shadowCamera) {
-        dirLight.shadowCamera.left = dirLight.shadowCameraLeft;
-        dirLight.shadowCamera.right = dirLight.shadowCameraRight;
-        dirLight.shadowCamera.top = dirLight.shadowCameraTop;
-        dirLight.shadowCamera.bottom = dirLight.shadowCameraBottom;
+        dirLight.shadowCamera.left = dirLight.shadow.camera.left;
+        dirLight.shadowCamera.right = dirLight.shadow.camera.right;
+        dirLight.shadowCamera.top = dirLight.shadow.camera.top;
+        dirLight.shadowCamera.bottom = dirLight.shadow.camera.bottom;
         dirLight.shadowCamera.updateProjectionMatrix();
       }
     }

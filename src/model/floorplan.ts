@@ -114,8 +114,18 @@ module BP3D.Model {
         scope.removeWall(wall);
       });
       this.new_wall_callbacks.fire(wall);
+      wall.fireOnMove(() => {
+        scope.moveWall();
+      });
       this.update();
       return wall;
+    }
+
+    /**
+     * Triggers scene refresh event when a wall is moved
+     */
+    private moveWall(): void {
+      //this.update();
     }
 
     /** Removes a wall.

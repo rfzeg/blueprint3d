@@ -29,7 +29,7 @@ module BP3D.Three {
     function buildFloor() {
       var textureSettings = scope.room.getTexture();
       // setup texture
-      var floorTexture = THREE.ImageUtils.loadTexture(textureSettings.url);
+      var floorTexture = scene.textureLoader.load(textureSettings.url);
       floorTexture.wrapS = THREE.RepeatWrapping;
       floorTexture.wrapT = THREE.RepeatWrapping;
       floorTexture.repeat.set(1, 1);

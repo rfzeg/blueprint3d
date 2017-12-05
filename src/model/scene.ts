@@ -19,6 +19,8 @@ module BP3D.Model {
     /** The Json loader. */
     private loader: THREE.JSONLoader;
 
+    private textureLoader: THREE.TextureLoader;
+
     /** */
     private itemLoadingCallbacks = $.Callbacks();
 
@@ -39,6 +41,11 @@ module BP3D.Model {
       // init item loader
       this.loader = new THREE.JSONLoader();
       this.loader.crossOrigin = "";
+
+      //init texture loader
+      this.textureLoader = new THREE.TextureLoader();
+      this.textureLoader.setCrossOrigin("");
+
     }
 
     /** Adds a non-item, basically a mesh, to the scene.
@@ -120,7 +127,7 @@ module BP3D.Model {
         var item = new (Items.Factory.getClass(itemType))(
           scope.model,
           metadata, geometry,
-          new THREE.MeshFaceMaterial(materials),
+          new THREE.MultiMaterial(materials),
           position, rotation, scale
         );
         item.fixed = fixed || false;
