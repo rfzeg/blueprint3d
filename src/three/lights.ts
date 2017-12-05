@@ -16,12 +16,13 @@ module BP3D.Three {
     }
 
     function init() {
-      var light = new THREE.HemisphereLight(0xffffff, 0x888888, 1.1);
+      var light = new THREE.HemisphereLight(0xffffff, 0x888888, 0.9);
       light.position.set(0, height, 0);
       scene.add(light);
 
-      dirLight = new THREE.DirectionalLight(0xffffff, 0);
-      dirLight.color.setHSL(1, 1, 0.1);
+
+      dirLight = new THREE.DirectionalLight(0xffffff, 0.2);
+      //dirLight.color.setHSL(1, 1, 0.1);
 
       dirLight.castShadow = true;
 
@@ -55,14 +56,10 @@ module BP3D.Three {
       dirLight.shadow.camera.right = d;
       dirLight.shadow.camera.top = d;
       dirLight.shadow.camera.bottom = -d;
+
       // this is necessary for updates
-      if (dirLight.shadowCamera) {
-        dirLight.shadowCamera.left = dirLight.shadow.camera.left;
-        dirLight.shadowCamera.right = dirLight.shadow.camera.right;
-        dirLight.shadowCamera.top = dirLight.shadow.camera.top;
-        dirLight.shadowCamera.bottom = dirLight.shadow.camera.bottom;
-        dirLight.shadowCamera.updateProjectionMatrix();
-      }
+      dirLight.shadow.camera.updateProjectionMatrix();
+
     }
 
     init();
