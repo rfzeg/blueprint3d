@@ -1,4 +1,3 @@
-/// <reference path="../../lib/three.d.ts" />
 /// <reference path="../core/utils.ts" />
 
 module BP3D.Three {
@@ -142,7 +141,7 @@ module BP3D.Three {
       var line = new THREE.Line(
         makeLineGeometry(item),
         makeLineMaterial(scope.rotating),
-        THREE.LinePieces);
+        THREE.LineSegments);
 
       var cone = makeCone(item);
       var sphere = makeSphere(item);
