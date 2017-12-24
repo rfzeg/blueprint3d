@@ -17,7 +17,7 @@ module BP3D.Core {
       var tDx = x - tPoint.x;
       var tDy = y - tPoint.y;
       return Math.sqrt(tDx * tDx + tDy * tDy);
-    }poi
+    }
 
     /** Gets the projection of a point onto a line.
      * @param x Point's x coordinate.
