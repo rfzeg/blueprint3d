@@ -212,8 +212,6 @@ module BP3D.Core {
       @param startY Y start coord for raycast
     */
     static pointInPolygon(x: number, y: number, corners, startX?: number, startY?: number): boolean {
-      startX = startX || 0;
-      startY = startY || 0;
 
       //ensure that point(startX, startY) is outside the polygon consists of corners
       var tMinX = 0,
