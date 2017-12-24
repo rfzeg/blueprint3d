@@ -17,7 +17,7 @@ module BP3D.Core {
       var tDx = x - tPoint.x;
       var tDy = y - tPoint.y;
       return Math.sqrt(tDx * tDx + tDy * tDy);
-    }
+    }poi
 
     /** Gets the projection of a point onto a line.
      * @param x Point's x coordinate.
@@ -212,8 +212,6 @@ module BP3D.Core {
       @param startY Y start coord for raycast
     */
     static pointInPolygon(x: number, y: number, corners, startX?: number, startY?: number): boolean {
-      startX = startX || 0;
-      startY = startY || 0;
 
       //ensure that point(startX, startY) is outside the polygon consists of corners
       var tMinX = 0,
