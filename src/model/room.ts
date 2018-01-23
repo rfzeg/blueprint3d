@@ -87,7 +87,9 @@ module BP3D.Model {
         new THREE.MeshBasicMaterial({
           side: THREE.DoubleSide
         }));
-      this.floorPlane.visible = false;
+      this.floorPlane.visible = true;
+      this.floorPlane.material.visible = false;
+
       this.floorPlane.rotation.set(Math.PI / 2, 0, 0);
       (<any>this.floorPlane).room = this; // js monkey patch
     }
