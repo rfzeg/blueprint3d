@@ -1,5 +1,5 @@
 /// <reference path="controller.ts" />
-/// <reference path="floorPlan.ts" />
+/// <reference path="floorplan.ts" />
 /// <reference path="lights.ts" />
 /// <reference path="skybox.ts" />
 /// <reference path="controls.ts" />
