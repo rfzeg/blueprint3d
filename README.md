@@ -84,6 +84,38 @@ The `src` directory contains the core of the project. Here is a description of t
 
 The example directory contains an application built using the core blueprint3d javascript building blocks. It adds html, css, models, textures, and more javascript to tie everything together.
 
+
+## Docker
+
+Build the new image by running this command from within the project's root directory:  
+
+```
+docker build -t blueprint3d-image .
+```
+
+Then, run a container from this new image, and open an interactive Bash shell inside that container:  
+
+```
+docker run -it --name blueprint3d_container blueprint3d-image /bin/bash
+```
+
+To bind the server to the host machine's IP address, get the IP address of the running Docker container:  
+
+```
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' blueprint3d_container
+```
+
+This command will output the container's IP address, which is used in the next step:  
+
+```
+172.17.0.2
+```
+
+Inside the container, use python to start a HTTP server:  
+```
+python3 -m http.server 8000 --bind 172.17.0.2
+```
+
 ## License
 
 This project is open-source! See LICENSE.txt for more information.
