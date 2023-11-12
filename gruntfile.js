@@ -96,10 +96,6 @@ module.exports = function (grunt) {
         }
     };
 
-    configuration.concurrent = {
-        target1: ["browserSync", "watch"]
-    };
-
     //TypeDoc and Uglify
 
     configuration.typedoc = {
@@ -151,7 +147,6 @@ module.exports = function (grunt) {
         "copy:source",
         "ts:debug",
         "example",
-        "concurrent:target1"
     ]);
 
     grunt.registerTask("default", [
