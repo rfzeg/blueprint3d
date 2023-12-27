@@ -25,5 +25,5 @@ EXPOSE 8000
 # Change to the example directory
 WORKDIR /app/example
 
-# Set up a local server using Python
-CMD [ "python3", "-m", "http.server", "8000" ]
+# Set up a local server using Python with custom bind address
+CMD [ "python3", "-m", "http.server", "8000", "--bind", "172.17.0.2" ]
